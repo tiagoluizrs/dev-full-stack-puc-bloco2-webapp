@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import { CardList } from '~/components/CardList';
-import { StorageService } from '~/services/storage';
+import { StorageService } from '~/services/Storage';
 import { AppBar, NoteDialog } from '~/components';
-import { NoteService, type Note } from '~/services/note';
+import { NoteService, type Note } from '~/services/Note';
 
 
 export default function MyListPage() {

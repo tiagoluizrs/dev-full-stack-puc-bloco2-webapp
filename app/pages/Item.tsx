@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { ApiService } from '~/services/api';
-import { StorageService } from '~/services/storage';
-import { NoteService, type Note } from '~/services/note';
+import { ApiService } from '~/services/Api';
+import { StorageService } from '~/services/Storage';
+import { NoteService, type Note } from '~/services/Note';
 import {
     Container,
     Typography,

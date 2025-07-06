@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ApiService } from '~/services/api';
+import { ApiService } from '~/services/Api';
 
 export const usePopular = (type: 'movie' | 'tv') => {
     const [data, setData] = useState<any[]>([]);

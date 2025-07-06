@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { usePopular } from '~/hooks/usePopular';
-import { ApiService } from '~/services/api';
-import { StorageService } from '~/services/storage';
+import { ApiService } from '~/services/Api';
+import { StorageService } from '~/services/Storage';
 import { CardList } from '~/components/CardList';
 import { AppBar } from '~/components/AppBar';
 import { Container, Box, CircularProgress } from '@mui/material';

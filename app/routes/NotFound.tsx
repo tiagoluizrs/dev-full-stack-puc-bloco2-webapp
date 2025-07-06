@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import NotFoundErrorPage from "~/pages/not-found";
+import NotFoundErrorPage from "~/pages/NotFound";
 
 export function meta({}: Route.MetaArgs) {
     return [
