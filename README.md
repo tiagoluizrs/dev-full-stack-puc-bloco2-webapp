@@ -1,87 +1,106 @@
-# Home to React Router!
+# CineSync 🎬 – Sua Lista de Filmes e Séries com Anotações Inteligentes
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Aplicação front-end desenvolvida como parte do MVP da disciplina de Desenvolvimento Front-end Avançado. O CineSync é um gerenciador pessoal de filmes e séries, permitindo favoritar, anotar impressões e acompanhar o progresso de séries de maneira interativa e responsiva.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+Este projeto utiliza React, React Router, componentização, consumo de API externa (The Movie Database), armazenamento local (localStorage) e boas práticas de usabilidade.
 
-## Features
+## 🚀 Como executar o projeto
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+1. Clone o repositório:
 
-## Getting Started
+```bash
+git clone https://github.com/seu-usuario/cinesync.git
+cd cinesync
+```
 
-### Installation
-
-Install the dependencies:
-
+2. Instale as dependências:
 ```bash
 npm install
 ```
 
-### Development
-
-Start the development server with HMR:
-
+3. Inicie o servidor de desenvolvimento:
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+4. Acesse em: http://localhost:5173
 
-## Building for Production
+### 🧱 Organização do Projeto
 
-Create a production build:
-
-```bash
-npm run build
+```md
+## 📁 Estrutura base de pastas (Alguns arquivos foram omitidos para simplificação, mas estão presentes no projeto. Veja o código fonte completo no repositório.)
+cinesync/
+├── public/               # Arquivos estáticos
+├── app/                  # Código-fonte da aplicação
+│   ├── components/       # Componentes reutilizáveis
+│   ├── hooks/            # Hooks personalizados    
+│   ├── pages/            # Páginas da aplicação
+│   ├── routes/           # Configuração de rotas
+│   ├── services/         # Serviços de API e armazenamento
+│   ├── app.css           # Estilos globais
+│   └── root.tsx          # Componente raiz da aplicação
+│   └── routes.tsx        # Configuração de rotas da aplicação
+├── package.json          # Dependências e scripts
+└── vite.config.js        # Configuração do Vite
 ```
 
-## Deployment
+## 🔄 Componentes reutilizáveis
 
-### Docker Deployment
+- `<Appbar />`: Como navegação entre páginas
+- `<CardList />`: Utilizado para exibir filmes e séries de forma visual
+- `<NoteDialog />`: Modal reutilizado em mais de uma tela para gerenciar anotações
+- `<SearchBar />`: Barra de pesquisa para encontrar filmes e séries
 
-To build and run using Docker:
+Os demais não tiveram modificações, apenas são componentes de terceiros puros sem customização.
 
-```bash
-docker build -t my-app .
+## 📋 Formulário com validação (`NoteDialog`):
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+Implementado na tela de detalhe dos filmes e séries (ItemPage - Item.tsx) 
 
-The containerized application can be deployed to any platform that supports Docker, including:
+- Campos obrigatórios (Campo nota se for filme ou campo episódios (quantidade) assistidos se for uma série);
+- Comentários exigindo um mínimo de 50 caracteres com feedback visual caso não seja adicionado o valor mínimo, e também um campo com a quantidade atual de caractéres que altera conforme for sendo adicionado texto;
+- Salvo no `localStorage`;
+- Dados exibidos na tela de detalhes (`ItemPage - Item.tsx`) com opção de edição/exclusão.
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+## 🔗 Roteamento com React Router
 
-### DIY Deployment
+- Rotas configuradas com `@react-router/dev`
+- Utilização dos hooks:
+    - `useNavigate`: redirecionamento de rotas após ações
+    - `useParams`: captura do ID e tipo do item na URL
+    - `useLocation`: leitura do estado e rota atual para o menu exibir uma borda na página atual
+- Implementação de rota 404 em `NotFound.tsx`
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+## 🔌 API externa: The Movie Database (TMDB)
 
-Make sure to deploy the output of `npm run build`
+- **API:** [https://developer.themoviedb.org](https://developer.themoviedb.org)
+- **Licença:** Gratuita para uso educacional. Requer autenticação com **API Key (Token de Leitura)** via variável de ambiente:
+- **Integração feita com:** `axios` através do serviço `api.ts`
+- **Idioma configurado:** `pt-BR`
+- **Rotas utilizadas:**
+- `GET /movie/popular` → Lista de filmes populares
+- `GET /tv/popular` → Lista de séries populares
+- `GET /search/movie?query=` → Busca de filmes por nome
+- `GET /search/tv?query=` → Busca de séries por nome
+- `GET /movie/{id}` → Detalhes de um filme
+- `GET /tv/{id}` → Detalhes de uma série
+- **Tratamento de dados:**
+- Requisições feitas com `axios` e tratadas em `try/catch`
+- Mensagens de erro amigáveis na interface
+- Indicadores visuais de carregamento (`CircularProgress`)
+- Feedback de "Nenhum item encontrado" quando necessário
+- Chave de API: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NjY0OWRlOWNkNzQ1YzI0ZjQ2ODdkMzc0NmNkMDhlMSIsIm5iZiI6MTc1MTc1Nzg2Ni43NCwic3ViIjoiNjg2OWI0MmFhZjZiNTI4NTA4ZWQ1MWRmIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.IgOfnS2fQYpSRTBjIu1MFvN_f9CU3Wag5U9y0FA25Gc"
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
 
-## Styling
+## 🧩 Melhoria da experiência do usuário
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+- Loaders com `CircularProgress`
+- `Snackbar` para feedbacks de sucesso/erro
+- Mensagens como "Nenhum item encontrado"
+- Layout responsivo usando `@mui/material`
 
----
+## 🧼 Boas práticas
 
-Built with ❤️ using React Router.
+- Componentes bem nomeados e divididos por responsabilidades
+- Projeto hospedado no GitHub:
+  👉 [https://github.com/tiagoluizrs/dev-full-stack-puc-bloco2-webapp](https://github.com/tiagoluizrs/dev-full-stack-puc-bloco2-webapp)
